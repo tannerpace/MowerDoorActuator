@@ -15,7 +15,6 @@ This repository contains the code for controlling a linear actuator (the "Mower 
 - **ESP32-C6-DevKitC-1**  
   *Espressif Systems Development Board*
 - **NOYITO AC to DC 9V 6A Isolated Power Supply Module**  
-  *(Rated 4.6 out of 5 stars, 310 reviews)*  
   Converts AC 120V (110-260V) to DC 9V 6A (54W, peak 8A) with overcurrent, overload, and short-circuit protection.
 - **2 Channel DC 5V Relay Module with Optocoupler Relay**
 - **VEVOR Linear Actuator 12V, 12 Inch High Load 330lbs/1500N Linear Actuator**  
