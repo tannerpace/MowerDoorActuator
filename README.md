@@ -108,6 +108,6 @@ The code handles:
 
 ## License
 MIT
-This project is provided as-is without any warranty. 
+This project is provided as-is without any warranty.  This project was inspired by a Reddit thread in /r Segwaynavimow
 
 ---
