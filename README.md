@@ -6,7 +6,7 @@ This repository contains the code for controlling a linear actuator (the "Mower 
 
 - **Wi-Fi Connectivity:** Connects to your local Wi-Fi network.
 - **Web Interface:** A Materialize CSS–based GUI for extending, retracting, or stopping the actuator.
-- **HomeKit Integration:** Uses HomeSpan to integrate with Apple HomeKit.
+- **HomeKit Integration:** Uses HomeSpan to integrate with Home assistant or Apple HomeKit.
 - **Auto Stop:** The Ticker library is used to automatically stop the actuator after 90 seconds, which in turn shuts down the relay. This functionality helps save power by ensuring that the relay is not left on indefinitely.
 - **Relay Control:** Uses two relay channels to manage actuator direction.
 
