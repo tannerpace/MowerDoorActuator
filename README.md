@@ -1,6 +1,6 @@
 # Mower Door Actuator
 
-This repository contains the code for controlling a linear actuator (the "Mower Door Actuator") using an ESP32-C6 development board. The actuator is controlled via both a web GUI and HomeKit (using [HomeSpan](https://github.com/HomeSpan/HomeSpan)). The system automatically stops the actuator after 90 seconds to prevent over-driving.
+This repository contains the code for controlling a linear actuator (the "Mower Door Actuator") using an ESP32-C6 development board. The actuator is controlled via both a web GUI and HomeKit (using [HomeSpan](https://github.com/HomeSpan/HomeSpan)). The system automatically turns off the relay after 90 seconds to prevent wasting power. The actuator has a built-in stop so no need to worry about overdriving.
 
 ## Features
 
