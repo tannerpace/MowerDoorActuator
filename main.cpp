@@ -182,7 +182,7 @@ void setup() {
   new SpanAccessory();
   new Service::AccessoryInformation();
   new Characteristic::Identify();
-  new Characteristic::Manufacturer("SAC");
+  new Characteristic::Manufacturer("TPB");
   new Characteristic::Model("MowerDoorActuator");
   new Characteristic::SerialNumber("12345678");
   new ActuatorSwitch();
