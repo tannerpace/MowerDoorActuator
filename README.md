@@ -1,7 +1,5 @@
 # Mower Door Actuator
 
- repository for controlling a linear actuator (the "Mower Door Actuator") using an ESP32-C6 development board. The actuator is controlled via both a web GUI and HomeKit (using [HomeSpan](https://github.com/HomeSpan/HomeSpan)
-
 ## Hardware List
 
 - **ESP32-C6-DevKitC-1**  
