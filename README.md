@@ -19,12 +19,7 @@
 - **Arduino IDE:**  
   - Install the latest version from the [Arduino website](https://www.arduino.cc/en/software).
   - In **Tools → Board → Boards Manager**, install **"ESP32 by Espressif Systems"**.  
-  - **Select your board:** Choose the ESP32-C6 entry (if available). If not, check Espressif’s documentation or GitHub for development branch support.
-    
-### Partitioning
-
-When using the Arduino IDE, set your partition scheme via **Tools → Partition Scheme**:
-- I selected a scheme like **"Minimal (2  NO OTA partition)"**  otherwise you won't have enough space for the entire Arduino sketch. 
+  - **Select your board:** Choose the ESP32-C6 entry
 
 
 
@@ -72,9 +67,3 @@ The code handles:
 When using the Arduino IDE, set your partition scheme via **Tools → Partition Scheme**:
 - I selected a scheme like **"Minimal (2mb NO OTA partition)"**  otherwise you won't have enough space for the entire Arduino sketch.  I'm filling this out for memory, but I think it was  2 MB per partition.
 
- relay outputs.
- pairing code matches.
-  
-- **Free Space Errors:**  
-  If you encounter memory issues, try a different partition scheme with more space.
---
