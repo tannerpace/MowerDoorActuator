@@ -30,7 +30,7 @@ The code handles:
   - Uses Materialize CSS for a responsive design.
 - **Actuator Control:**  
   - `extendActuator()`, `retractActuator()`, and `stopActuator()` manage relay outputs.
-  - A `Ticker` is used to automatically stop the actuator after 90 seconds.
+  - A `Ticker` is used to automatically turn off power to the relay after 90 seconds, this saves power.
 - **HomeSpan Accessory:**  
   - Exposes the actuator as a HomeKit accessory with a switch interface.
   - Pairing is set with the code `83722189`.
