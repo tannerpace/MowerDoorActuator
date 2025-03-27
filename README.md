@@ -46,7 +46,7 @@ The code handles:
    
 3. **Access the Web Interface:**  
    - Open a web browser and navigate to `http://<BOARD_IP_ADDRESS>/`.
-   - Since I'm using home assistant i didn't test the functioning this part but did verify the page was accessible.
+   - verify the page is accessible, i perfer homeassistant to control the actuator, however it is also working on local network at the page.
    
 
 
