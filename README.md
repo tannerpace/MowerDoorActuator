@@ -56,15 +56,7 @@ The code handles:
    - Since I'm using home assistant i didn't test the functioning this part but did verify the page was accessible.
    
 
-## Hardware List
 
-- **ESP32-C6-DevKitC-1**  
-  *Espressif Systems Development Board* this was found on AliExpress
-- **NOYITO AC to DC 12V 8A Isolated Power Supply Module**  
-  Converts AC 120V (110-260V) to DC 12V 8A (54W, peak 8A) with overcurrent, overload, and short-circuit protection. available on Amazon
-- **2 Channel DC 5V Relay Module with Optocoupler Relay** available on Amazon
-- **VEVOR Linear Actuator 12V, 12 Inch High Load 330lbs/1500N Linear Actuator**  also available on Amazon
-  Includes a mounting bracket and has IP54 protection.
 
 ## Software Environment & Setup
 
