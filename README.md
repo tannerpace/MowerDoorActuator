@@ -47,18 +47,6 @@ The code handles:
 3. **Access the Web Interface:**  
    - Open a web browser and navigate to `http://<BOARD_IP_ADDRESS>/`.
    - verify the page is accessible, i perfer homeassistant to control the actuator, however it is also working on local network at the page.
-   
-
-
-
-## Software Environment & Setup
-
-### Arduino IDE / PlatformIO
-
-- **Arduino IDE:**  
-  - Install the latest version from the [Arduino website](https://www.arduino.cc/en/software).
-  - In **Tools → Board → Boards Manager**, install **"ESP32 by Espressif Systems"**.  
-  - **Select your board:** Choose the ESP32-C6 entry (if available). If not, check Espressif’s documentation or GitHub for development branch support.
     
 ### Partitioning
 
