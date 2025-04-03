@@ -116,15 +116,15 @@ void handleRoot() {
         <!-- Extend Button -->
         <div class="col s12 m4">
           <button id="extend-btn" class="waves-effect waves-light btn-large">
-            <i class="material-icons left" aria-hidden="true">arrow_downward</i>
-            Close Door
+            <i class="material-icons left" aria-hidden="true">arrow_upward</i>
+            Open Door
           </button>
         </div>
         <!-- Retract Button -->
         <div class="col s12 m4">
           <button id="retract-btn" class="waves-effect waves-light btn-large">
-            <i class="material-icons left" aria-hidden="true">arrow_upward</i>
-            Open Door
+            <i class="material-icons left" aria-hidden="true">arrow_downward</i>
+            Close Door
           </button>
         </div>
         <!-- Stop Button -->
