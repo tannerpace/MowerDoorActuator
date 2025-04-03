@@ -3,14 +3,11 @@
 #include "Ticker.h"
 #include <WebServer.h>  
 
-
 Ticker StopActuatorTicker;
 WebServer server(80); 
 
-
 const char* ssid     = "redacted";
 const char* password = "redacted";
-
 
 void connectToWiFi() {
   WiFi.begin(ssid, password);
@@ -62,10 +59,7 @@ struct ActuatorSwitch : Service::Switch {
 };
 
 // --- Web Server Handlers ---
-// Root endpoint
-// Displays the control interface
-// Uses Materialize CSS for styling
-// Provides buttons to extend, retract, and stop the actuator
+// Root endpoint serving the updated SPA UI
 void handleRoot() {
   String html = R"(
 <!DOCTYPE html>
@@ -73,6 +67,7 @@ void handleRoot() {
 <head>
   <title>Mower Door Control</title>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Materialize CSS and Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
@@ -102,33 +97,68 @@ void handleRoot() {
       <div class="row">
         <!-- Extend Button -->
         <div class="col s12 m4">
-          <a href="/extend" class="waves-effect waves-light btn-large">
-            <i class="material-icons left">arrow_upward</i>
-            Extend Actuator
-          </a>
+          <button id="extend-btn" class="waves-effect waves-light btn-large">
+            <i class="material-icons left">arrow_downward</i>
+            Close Door
+          </button>
         </div>
         <!-- Retract Button -->
         <div class="col s12 m4">
-          <a href="/retract" class="waves-effect waves-light btn-large">
-            <i class="material-icons left">arrow_downward</i>
-            Retract Actuator
-          </a>
+          <button id="retract-btn" class="waves-effect waves-light btn-large">
+            <i class="material-icons left">arrow_upward</i>
+            Open Door
+          </button>
         </div>
         <!-- Stop Button -->
         <div class="col s12 m4">
-          <a href="/stop" class="waves-effect waves-light btn-large">
+          <button id="stop-btn" class="waves-effect waves-light btn-large">
             <i class="material-icons left">pause</i>
             Stop Actuator
-          </a>
+          </button>
+        </div>
+      </div>
+      <!-- Status Message Panel -->
+      <div class="row">
+        <div class="col s12">
+          <div id="status" class="card-panel teal lighten-4" style="display: none;"></div>
         </div>
       </div>
     </div>
   </main>
+  <!-- JavaScript to handle SPA interactions -->
+  <script>
+    // Helper function to display status messages
+    function showStatus(message) {
+      const statusDiv = document.getElementById("status");
+      statusDiv.style.display = "block";
+      statusDiv.textContent = message;
+      setTimeout(() => { statusDiv.style.display = "none"; }, 5000);
+    }
+
+    // Send command using the Fetch API
+    function sendCommand(endpoint) {
+      fetch(endpoint)
+        .then(response => response.text())
+        .then(text => showStatus(text))
+        .catch(error => showStatus("Error: " + error));
+    }
+
+    // Event listeners for buttons
+    document.getElementById("extend-btn").addEventListener("click", () => {
+      sendCommand("/extend");
+    });
+    document.getElementById("retract-btn").addEventListener("click", () => {
+      sendCommand("/retract");
+    });
+    document.getElementById("stop-btn").addEventListener("click", () => {
+      sendCommand("/stop");
+    });
+  </script>
   <!-- Materialize JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
-)";
+  )";
 
   server.send(200, "text/html", html);
 }
