@@ -1,13 +1,14 @@
 #include "HomeSpan.h"
 #include "WiFi.h"
 #include "Ticker.h"
-#include <WebServer.h>  
+#include <WebServer.h>
+#include <ESPmDNS.h>
 
 Ticker StopActuatorTicker;
-WebServer server(80); 
+WebServer server(80);
 
-const char* ssid     = "redacted";
-const char* password = "redacted";
+const char* ssid     = "redact";
+const char* password = "redact";
 
 void connectToWiFi() {
   WiFi.begin(ssid, password);
@@ -24,6 +25,7 @@ void connectToWiFi() {
 // Actuator control functions
 #define RELAY1_PIN 18
 #define RELAY2_PIN 19
+
 void extendActuator() {
   digitalWrite(RELAY1_PIN, LOW);
   digitalWrite(RELAY2_PIN, HIGH);
@@ -59,15 +61,15 @@ struct ActuatorSwitch : Service::Switch {
 };
 
 // --- Web Server Handlers ---
-// Root endpoint serving the updated SPA UI
+// Root endpoint serving the updated SPA UI with improved accessibility
 void handleRoot() {
   String html = R"(
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Mower Door Control</title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mower Door Control</title>
   <!-- Materialize CSS and Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
@@ -83,36 +85,52 @@ void handleRoot() {
     .container {
       margin-top: 50px;
     }
+    /* Skip Link Styles */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: -999px;
+      background: #fff;
+      padding: 0.5em;
+      z-index: 1000;
+    }
+    .skip-link:focus {
+      left: 0;
+      top: 0;
+    }
   </style>
 </head>
 <body>
+  <!-- Skip to main content link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
   <!-- Navigation Bar -->
-  <nav>
+  <nav role="navigation" aria-label="Main Navigation">
     <div class="nav-wrapper blue">
       <a href="#" class="brand-logo center">Mower Door Actuator</a>
     </div>
   </nav>
-  <main>
+  <main id="main-content">
     <div class="container">
       <div class="row">
         <!-- Extend Button -->
         <div class="col s12 m4">
           <button id="extend-btn" class="waves-effect waves-light btn-large">
-            <i class="material-icons left">arrow_downward</i>
+            <i class="material-icons left" aria-hidden="true">arrow_downward</i>
             Close Door
           </button>
         </div>
         <!-- Retract Button -->
         <div class="col s12 m4">
           <button id="retract-btn" class="waves-effect waves-light btn-large">
-            <i class="material-icons left">arrow_upward</i>
+            <i class="material-icons left" aria-hidden="true">arrow_upward</i>
             Open Door
           </button>
         </div>
         <!-- Stop Button -->
         <div class="col s12 m4">
           <button id="stop-btn" class="waves-effect waves-light btn-large">
-            <i class="material-icons left">pause</i>
+            <i class="material-icons left" aria-hidden="true">pause</i>
             Stop Actuator
           </button>
         </div>
@@ -120,7 +138,7 @@ void handleRoot() {
       <!-- Status Message Panel -->
       <div class="row">
         <div class="col s12">
-          <div id="status" class="card-panel teal lighten-4" style="display: none;"></div>
+          <div id="status" class="card-panel teal lighten-4" role="status" aria-live="polite" style="display: none;"></div>
         </div>
       </div>
     </div>
@@ -190,8 +208,20 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Hello from setup!");
 
-  // WiFi + WebServer
+  // Connect to WiFi
   connectToWiFi();
+
+  // Start mDNS with the chosen hostname
+  if (!MDNS.begin("mowerdoor")) {
+    Serial.println("Error setting up MDNS responder!");
+    while(1) {
+      delay(1000);
+    }
+  }
+  Serial.println("mDNS responder started");
+  MDNS.addService("http", "tcp", 80);
+
+  // Initialize Web Server Endpoints
   server.on("/", handleRoot);
   server.on("/extend", handleExtend);
   server.on("/retract", handleRetract);
@@ -199,7 +229,7 @@ void setup() {
   server.begin();
   Serial.println("Web server started!");
 
-  // HomeSpan
+  // HomeSpan Setup
   homeSpan.setPairingCode("83722189");
   homeSpan.begin(Category::GarageDoorOpeners, "Mower Door");
 
