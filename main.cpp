@@ -1,4 +1,3 @@
-#include "HomeSpan.h"
 #include "WiFi.h"
 #include "Ticker.h"
 #include <WebServer.h>
@@ -41,27 +40,8 @@ void stopActuator() {
   digitalWrite(RELAY2_PIN, HIGH);
 }
 
-// --- HomeSpan Accessory ---
-struct ActuatorSwitch : Service::Switch {
-  SpanCharacteristic *power;
-  ActuatorSwitch() : Service::Switch() {
-    power = new Characteristic::On();
-  }
-  boolean update() override {
-    StopActuatorTicker.detach(); // Cancel any previously scheduled stopActuator call
-    if (power->getNewVal()) {
-      retractActuator();
-      StopActuatorTicker.once_ms(90 * 1000, stopActuator);
-    } else {
-      extendActuator();
-      StopActuatorTicker.once_ms(90 * 1000, stopActuator);
-    }
-    return true;
-  }
-};
-
 // --- Web Server Handlers ---
-// Root endpoint serving the updated SPA UI with improved accessibility
+// Root endpoint serving the SPA UI
 void handleRoot() {
   String html = R"(
 <!DOCTYPE html>
@@ -145,7 +125,6 @@ void handleRoot() {
   </main>
   <!-- JavaScript to handle SPA interactions -->
   <script>
-    // Helper function to display status messages
     function showStatus(message) {
       const statusDiv = document.getElementById("status");
       statusDiv.style.display = "block";
@@ -153,7 +132,6 @@ void handleRoot() {
       setTimeout(() => { statusDiv.style.display = "none"; }, 5000);
     }
 
-    // Send command using the Fetch API
     function sendCommand(endpoint) {
       fetch(endpoint)
         .then(response => response.text())
@@ -161,7 +139,6 @@ void handleRoot() {
         .catch(error => showStatus("Error: " + error));
     }
 
-    // Event listeners for buttons
     document.getElementById("extend-btn").addEventListener("click", () => {
       sendCommand("/extend");
     });
@@ -183,7 +160,7 @@ void handleRoot() {
 
 // Extend Actuator endpoint
 void handleExtend() {
-  StopActuatorTicker.detach(); 
+  StopActuatorTicker.detach();
   extendActuator();
   StopActuatorTicker.once_ms(90 * 1000, stopActuator);
   server.send(200, "text/plain", "Actuator extending...");
@@ -214,7 +191,7 @@ void setup() {
   // Start mDNS with the chosen hostname
   if (!MDNS.begin("mowerdoor")) {
     Serial.println("Error setting up MDNS responder!");
-    while(1) {
+    while (1) {
       delay(1000);
     }
   }
@@ -229,27 +206,13 @@ void setup() {
   server.begin();
   Serial.println("Web server started!");
 
-  // HomeSpan Setup
-  homeSpan.setPairingCode("83722189");
-  homeSpan.begin(Category::GarageDoorOpeners, "Mower Door");
-
-  // Relay pins
+  // Setup Relay pins
   pinMode(RELAY1_PIN, OUTPUT);
   pinMode(RELAY2_PIN, OUTPUT);
   stopActuator();
-
-  // HomeSpan Accessory
-  new SpanAccessory();
-  new Service::AccessoryInformation();
-  new Characteristic::Identify();
-  new Characteristic::Manufacturer("TPB");
-  new Characteristic::Model("MowerDoorActuator");
-  new Characteristic::SerialNumber("12345678");
-  new ActuatorSwitch();
 }
 
 void loop() {
-  // Handle HomeSpan and WebServer
-  homeSpan.poll();
+  // Handle WebServer
   server.handleClient();
 }
