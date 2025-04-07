@@ -7,8 +7,8 @@
 Ticker StopActuatorTicker;
 WebServer server(80);
 
-const char* ssid     = "wifiname";
-const char* password = "password"; 
+const char* ssid     = "";
+const char* password = "";
 
 void connectToWiFi() {
   WiFi.begin(ssid, password);
@@ -26,10 +26,10 @@ struct ActuatorSwitch {
   // true = retracted, false = extended.
   bool state;
   
-  // Constructor initializes state as desired (default: extended)
+  // initial state of the actuator extended - door closed
   ActuatorSwitch() : state(false) {}
 
-  // true calls retractActuator(), false calls extendActuator()
+  // true calls retractActuator() opens door , false calls extendActuator() closes door
   void update(bool newState) {
     StopActuatorTicker.detach();  
     if (newState) {
