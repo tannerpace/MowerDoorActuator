@@ -53,3 +53,40 @@ The code handles:
 When using the Arduino IDE, set your partition scheme via **Tools → Partition Scheme**:
 - I selected a scheme like **"Minimal (2mb NO OTA partition)"**  otherwise you won't have enough space for the entire Arduino sketch.  I'm filling this out for memory, but I think it was  2 MB per partition.
 
+
+**Connections:**
+
+1. **NOYITO Power Supply**:
+   - Input:
+     - Connect AC 120V (hot line) and neutral to input terminals.
+   - Output:
+     - Connect DC +12V (positive) to relay module VCC.
+     - Connect DC GND (negative) to relay module GND and ESP32 GND (Green wire).
+
+2. **ESP32 DevKitC-1**:
+   - 5V Pin (Yellow wire) to 5V power input on Relay Module.
+   - GND Pin (Green wire) to common ground (Power supply and relay GND).
+   - GPIO Pin 18 (Blue wire) to Relay IN1.
+   - GPIO Pin 19 (Purple wire) to Relay IN2.
+
+3. **2-Channel Relay Module**:
+   - Connect Relay outputs:
+     - Relay Channel 1 NO (normally open) to Actuator Positive terminal.
+     - Relay Channel 2 NO (normally open) to Actuator Negative terminal.
+     - Both Relay Common (COM) terminals connected to +12V and GND respectively from power supply.
+
+4. **VEVOR Linear Actuator**:
+   - Positive and Negative terminals connected to relay output as described above.
+
+**Color Coding:**
+- Green: Ground
+- Yellow: +5V DC
+- Blue: GPIO Pin 18
+- Purple: GPIO Pin 19
+- Red: +12V DC
+- Black: DC Negative / GND
+
+Ensure the connections are properly insulated and secured. Mount all components within a protective enclosure to avoid moisture and dust ingress.
+
+
+
