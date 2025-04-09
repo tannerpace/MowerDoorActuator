@@ -13,7 +13,7 @@ WebServer server(80);
 const char* ssid     = "";
 const char* password = "";
 bool autoOpenState = false;
-const String targetMac = ""; // Target Bluetooth MAC address
+const String targetMac = ""
 volatile bool bleDetected = false;            // Flag set when target is detected
 BLEScan* pBLEScan = nullptr;
 
@@ -44,7 +44,8 @@ struct ActuatorSwitch {
     }
     state = newState;
   }
-  getState() {
+  
+  bool getState() {
     return state;
   }
 };
