@@ -42,7 +42,7 @@ The code handles:
    - Verify and upload the code to your ESP32-C6 board. 
    
 2. **Connect to Wi-Fi:**  
-   - The board will connect to your Wi-Fi network. Find the ip address by accessing the admin panel of your router, note the new devices ip address. if you are not sure of which one the new devices simply unplug power to the esc32 refresh your admin page and noting the device set was removed. 
+   - The board will connect to your Wi-Fi network. Find the ip address by accessing the admin panel of your router, note the new devices ip address add a serial message containing the ESP IP to your USB port.
    
 3. **Access the Web Interface:**  
    - Open a web browser and navigate to `http://<BOARD_IP_ADDRESS>/`.
