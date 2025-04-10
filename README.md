@@ -51,7 +51,8 @@ The code handles:
 ### Partitioning
 
 When using the Arduino IDE, set your partition scheme via **Tools → Partition Scheme**:
-- I selected a scheme like **"Minimal (2mb NO OTA partition)"**  otherwise you won't have enough space for the entire Arduino sketch.  I'm filling this out for memory, but I think it was  2 MB per partition.
+- select a scheme 
+ **"Minimal (2mb NO OTA partition)"**   2 MB per partition.
 
 
 **Connections:**
