@@ -30,10 +30,12 @@ The code handles:
   - Uses Materialize CSS for a responsive design.
 - **Actuator Control:**  
   - `extendActuator()`, `retractActuator()`, and `stopActuator()` manage relay outputs.
-  - A `Ticker` is used to automatically turn off power to the relay after 90 seconds, this saves power.
+  - A `Ticker` is used to automatically turn off power to the relay after 90 seconds, the actuator is one that has built in overdrive control but this is just a precaution.
 - **HomeSpan Accessory:**  
   - Exposes the actuator as a HomeKit accessory with a switch interface.
   - Pairing is set with the code `83722189`.
+
+I later removed the HomeKit dependency and am serving a web UI using vanilla JavaScript and HTML, I saved the website directly under my phone and interact with them overdoor with just a few clicks. 
 
 ## Usage
 
