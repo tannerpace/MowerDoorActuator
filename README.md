@@ -44,7 +44,31 @@ I later removed the HomeKit dependency and am serving a web UI using vanilla Jav
    - Verify and upload the code to your ESP32-C6 board. 
    
 2. **Connect to Wi-Fi:**  
-   - The board will connect to your Wi-Fi network. Find the ip address by accessing the admin panel of your router, note the new devices ip address add a serial message containing the ESP IP to your USB port.
+   - The board will connect to your Wi-Fi network. Find the ip address by accessing the admin panel of your router, note the new devices Look for the new ip address. 
+
+
+Finding Your Device’s IP Address
+
+To access the web interface, you’ll need to know the ESP32’s IP address on your local network. The most reliable way is to scan your network:
+
+📡 Scan for IP Addresses
+
+Mac (Terminal):
+
+sudo nmap -sn 192.168.1.0/24
+
+Replace 192.168.1.0/24 with your network’s subnet if different.
+You can find your subnet by running ifconfig and looking for your local IP.
+
+Windows (PowerShell or Command Prompt):
+
+1. Install Nmap.
+
+
+2. Run:
+
+nmap -sn 192.168.1.0/24
+
    
 3. **Access the Web Interface:**  
    - Open a web browser and navigate to `http://<BOARD_IP_ADDRESS>/`.
